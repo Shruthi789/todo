@@ -1,7 +1,8 @@
 import * as React from 'react';
+import { styled } from '@mui/material/styles';
 import Table from '@mui/material/Table';
 import TableBody from '@mui/material/TableBody';
-import TableCell from '@mui/material/TableCell';
+import TableCell, { tableCellClasses } from '@mui/material/TableCell';
 import TableContainer from '@mui/material/TableContainer';
 import TableHead from '@mui/material/TableHead';
 import TableRow from '@mui/material/TableRow';
@@ -26,14 +27,21 @@ const rows = [
    createData('Total', ...lastRowData())
 ];
 
+//Table Styling
+const StyledTableCell = styled(TableCell)(() => ({
+    [`&.${tableCellClasses.head}`]: {
+      backgroundColor: 'lightgrey'
+    }
+  }));
+
 export default function TargetTable() {
   return (
     <TableContainer component={Paper}>
       <Table sx={{ minWidth: 650 }} aria-label="simple table">
         <TableHead>
           <TableRow>
-             <TableCell>{columns[0]}</TableCell>
-            {columns.slice(1).map((value,index)=><TableCell align="right" key={index}>{value}</TableCell>)}
+             <StyledTableCell>{columns[0]}</StyledTableCell>
+            {columns.slice(1).map((value,index)=><StyledTableCell align="left" key={index}>{value}</StyledTableCell>)}
           </TableRow>
         </TableHead>
         <TableBody>
@@ -42,7 +50,7 @@ export default function TargetTable() {
               key={row.job}
               sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
             >
-              <TableCell component="th" scope="row">
+              <TableCell sx={{backgroundColor:'lavender'}} component="th" scope="row">
                 {row.job}
               </TableCell>
               { columns.slice(1).map((value,index)=>
