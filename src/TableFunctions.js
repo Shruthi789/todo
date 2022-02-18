@@ -15,7 +15,6 @@ function rowHeaders(){
 function jobTotals(value){
    const filterArray=users.filter((data)=>data.job===value);
    const totalTarget=filterArray.reduce((prv,curr)=>prv+curr.target,0);
-   console.log(totalTarget);
    return totalTarget;
 }
 
@@ -29,4 +28,20 @@ function lastRowData(){
    const valuesArray=columnHeaders().map((value)=>nameTotals(value));
    return valuesArray;
 }
-export {columnHeaders,rowHeaders,jobTotals,lastRowData}
+//Generate Cell Values
+function genCellValues(name,job){
+    const filterByNameandJob=users.filter((user)=>user.name===name && user.job===job);
+    let targetSum;
+    if(filterByNameandJob.length>1){
+        targetSum=filterByNameandJob.reduce((prv,curr)=>prv+curr.target,0);
+    }
+    else if(filterByNameandJob.length===1){
+        targetSum=filterByNameandJob[0].target;
+    }
+    else{
+        targetSum=0;
+    }
+    return targetSum;
+}
+
+export {columnHeaders,rowHeaders,jobTotals,lastRowData,genCellValues}

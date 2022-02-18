@@ -6,14 +6,15 @@ import TableContainer from '@mui/material/TableContainer';
 import TableHead from '@mui/material/TableHead';
 import TableRow from '@mui/material/TableRow';
 import Paper from '@mui/material/Paper';
-import {columnHeaders,rowHeaders,jobTotals,lastRowData} from './TableFunctions';
+import {columnHeaders,rowHeaders,jobTotals,lastRowData,genCellValues} from './TableFunctions';
 
+//Column Value Generation
 const columns = ['Job/Name',...columnHeaders(),'Total'];
 
 //Row Data Generation
 function createData(...values) {
   let targetData={};
-  const data=['job',[...columns.slice(1)]];
+  const data=['job',...columns.slice(1)];
   for(let i=0;i<data.length;i++){
       targetData[data[i]]=values[i]
   }
@@ -21,7 +22,7 @@ function createData(...values) {
 }
 
 const rows = [
-  ...rowHeaders().map((value)=>createData(`${value}`,jobTotals(value))),
+  ...rowHeaders().map((value)=>createData(`${value}`,...columnHeaders().map((data)=>genCellValues(data,value)),jobTotals(value))),
    createData('Total', ...lastRowData())
 ];
 
